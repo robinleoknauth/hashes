@@ -92,6 +92,14 @@ end
 # fall_and_winter_birthdays(students_with_birthdays) => [ ["Bertie", "Dottie"],
 # ["Bertie", "Warren"], ["Dottie", "Warren"] ]
 def fall_and_winter_birthdays(students)
+  right_students = students.select { |_student, month| month > 6 }.keys
+  solution = []
+  right_students.each_index do |i|
+    ((i + 1)...right_students.length).each do |idx|
+      solution << [right_students[i], right_students[idx]]
+    end
+  end
+  solution
 end
 
 # Define a method that, given an array of specimens, returns the biodiversity
@@ -118,7 +126,15 @@ end
 # can_tweak_sign("We're having a yellow ferret sale for a good cause over at the
 # pet shop!", "Leopard ferrets forever yo") => true
 def can_tweak_sign?(normal_sign, vandalized_sign)
+  letter_count_normal = character_count(normal_sign)
+  letter_count_vandal = character_count(vandalized_sign)
+  letter_count_vandal.all? { |l, count| letter_count_normal[l] >= count }
 end
 
 def character_count(str)
+  result_hash = Hash.new(0)
+  str.chars.each do |letter|
+    result_hash[letter.downcase] += 1
+  end
+  result_hash
 end
